@@ -1,0 +1,30 @@
+provider "aws" {
+    region ="us-east-2"
+    access_key = "AKIAWVHBCL6MXMJ4WKZD"
+    secret_key = "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"
+}
+
+resource "aws_instance" "new" {
+    ami = "ami-00399ec92321828f5"
+    instance_type = "t2.micro"
+    key_name = "vishn"
+    tags = {
+        name = "Newname"
+    }
+}
+
+
+
+how to get public and private ip
+
+   output.tf
+
+
+output "public_ip" {
+    value = aws_instance.new.public_ip
+}
+
+
+output "private_ip" {
+    value = aws_instance.new.private_ip
+}
