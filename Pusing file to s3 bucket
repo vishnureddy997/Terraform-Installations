@@ -1,0 +1,22 @@
+provider "aws" {
+    region = "ap-south-1"
+    access_key = 
+    secret_key = 
+}
+resource "aws_s3_bucket" "vishnus3" {
+   bucket = "vishnu-s3-vishnubucket"
+   acl = "private"
+   tags = {
+     Name = "vishnus3bucket"
+     Environment = "Test"
+   }
+}
+resource "aws_s3_bucket_object" "object" {
+
+  bucket = "vishnu-s3-vishnubucket"
+  key    = "vishnu123"
+  acl    = "private" 
+  source = "D:/terraformscripts/S3bucket/vi.txt"
+  etag = filemd5("D:/terraformscripts/S3bucket/vi.txt")
+
+}
