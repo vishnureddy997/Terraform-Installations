@@ -1,0 +1,40 @@
+provider "aws" {
+  region     = "ap-south-1"
+  access_key = "
+  secret_key = "a
+}
+
+
+resource "aws_security_group" "allow" {
+  ingress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  egress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+resource "aws_instance" "web" {
+  ami           = "ami-0c1a7f89451184c8b"
+  instance_type = "t2.micro"
+  key_name      = "terr1"
+  user_data     = "$(dockerinstall.sh)"
+  tags = {
+    Name = "Newinstance"
+  }
+
+  provisioner "remote-exec" {
+    inline = ["sudo chmod u+x D:/terraformscripts/dockerinstall.sh", "sh D:/terraformscripts/dockerinstall.sh"]
+  }
+  connection {
+    type        = "ssh"
+    user        = "ubuntu"
+    host        = "${aws_instance.web.public_ip}"
+    private_key = "${file("./terr1.pem")}"
+  }
+}
