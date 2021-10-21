@@ -1,0 +1,17 @@
+provider "aws" {
+    region = "ap-south-1"
+    access_key = 
+    secret_key = 
+}
+
+resource "aws_lb" "test" {
+  name               = "test-lb-tf"
+  internal           = false
+  load_balancer_type = "application"
+  subnets            = ["subnet-db240497", "subnet-4ac53621"]
+
+  enable_deletion_protection = true
+   tags = {
+    Environment = "production"
+  }
+}
