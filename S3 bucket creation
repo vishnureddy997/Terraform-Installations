@@ -1,0 +1,16 @@
+provider "aws" {
+    region = "ap-south-1"
+    access_key =
+    secret_key = 
+}
+
+resource "aws_s3_bucket" "my_buck" {
+  bucket = "terraformstate-buckets3"
+  acl    = "private"
+  versioning {
+    enabled = true
+  }
+  tags = {
+    name = "my_buck"
+  }
+}
